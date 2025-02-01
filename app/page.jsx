@@ -16,7 +16,7 @@ export default function Home() {
     name: "",
     phone: "",
     location: "",
-    status: "blank",
+    status: "b",
   });
   const [fetchData, setFetchData] = useState([]);
   const addPotential = () => {
@@ -52,14 +52,14 @@ export default function Home() {
   const changeStatus = (id, currentStatus) => {
     try {
       let newStatus;
-      if (currentStatus === "blank") {
-        newStatus = "interested";
-      } else if (currentStatus === "interested") {
-        newStatus = "client";
-      } else if (currentStatus === "client") {
-        newStatus = "nothing";
-      } else if (currentStatus === "nothing") {
-        newStatus = "blank";
+      if (currentStatus === "b") {
+        newStatus = "i";
+      } else if (currentStatus === "i") {
+        newStatus = "c";
+      } else if (currentStatus === "c") {
+        newStatus = "n";
+      } else if (currentStatus === "n") {
+        newStatus = "b";
       }
       updateDoc(doc(firestore, "potential", id), {
         status: newStatus,
@@ -117,12 +117,12 @@ export default function Home() {
           <h1>Location</h1>
         </div>
         {fetchData.map((potential, key) => (
-          <button
+          <main
             onClick={() => {
               changeStatus(potential.id, potential.status);
             }}
             key={`${potential.name}-${key}`}
-            className={`text-sm p-4 rounded-md relative flex mt-2 w-full justify-between ${potential.status === "blank" ? "bg-orange-400 text-black" : "bg-neutral-800 "} ${potential.status === "interested" ? "bg-blue-400 text-black" : "bg-neutral-800 "} ${potential.status === "nothing" ? "bg-red-400 text-black" : "bg-neutral-800 "} ${potential.status === "client" ? "bg-green-400 text-black" : "bg-neutral-800 "}`}
+            className={`text-sm p-4 rounded-md relative flex mt-2 w-full justify-between ${potential.status === "b" ? "bg-orange-400 text-black" : "bg-neutral-800 "} ${potential.status === "i" ? "bg-blue-500 text-black" : "bg-neutral-800 "} ${potential.status === "n" ? "bg-red-400 text-black" : "bg-neutral-800 "} ${potential.status === "c" ? "bg-green-500 text-black" : "bg-neutral-800 "}`}
           >
             <h1>{potential.name}</h1>
             <h1>{potential.phone}</h1>
@@ -133,9 +133,9 @@ export default function Home() {
               }}
               className="absolute -right-16 top-1/2 -translate-y-1/2 rounded-full bg-red-600 p-2"
             >
-              <Image src={trash} alt="" width={24} />
+              <Image src={trash} alt="" width={32} />
             </button>
-          </button>
+          </main>
         ))}
       </div>
     </main>
